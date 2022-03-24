@@ -187,6 +187,29 @@ class SamplerDatabase():
             #f.create_dataset('mean',data=self.mean,dtype='float32')
             #f.create_dataset('unc',data=self.unc,dtype='float32')
             #f.create_dataset('runc',data=self.runc,dtype='float32')
+    
+    def select_nuclides(self,nuc_indices):
+        """
+        Create a new database with reduced set of nuclides.
+
+        Parameters
+        ----------
+        nuc_indices : bool array
+            Array of length equal to nucs indicating which nuclides to keep.
+
+        Returns
+        -------
+        newDB : SamplerDatabase
+            A new database containing the reduced dataset.
+
+        """
+        newDB=self
+        newDB.nucs=newDB.nucs[nuc_indices]
+        newDB.nnucs=len(newDB.nucs)
+        newDB.data=newDB.data[:,nuc_indices,:,:]
+        newDB.calculate_unc()
+        
+        return newDB
 
 def gen_h5_from_csv(pathname,outfname):
     """Generate an HDF5 database from a set of sampler f71 csv files.
