@@ -201,6 +201,14 @@ class SamplerDatabase():
         -------
         newDB : SamplerDatabase
             A new database containing the reduced dataset.
+        
+        Example
+        -------
+        sdb=SamplerDatabase('db.h5')
+        inds=sdb.mean[:,0,-1]>1e-15 #select nuclides above a cutoff
+        sdb_reduced=sdb.select_nuclides(inds)
+        sdb_reduced.save_to_h5('db_reduced.h5')
+        
 
         """
         newDB=self
