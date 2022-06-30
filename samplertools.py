@@ -248,3 +248,26 @@ def gen_h5_from_csv(pathname,outfname):
     newDB.calculate_unc()
     newDB.save_to_h5(outfname)    
 
+def name_from_ZAID(zaid):
+    """Generate a string name of a nuclide from ZAID.
+
+    Parameters
+    ----------
+    zaid : int
+        ZAID of a nuclide in form ZZAAAM (e.g., 922350 is U235, 430991 is Tc99m)
+
+    Returns
+    -------
+    name : str
+        String name of the nuclide (e.g., U235).
+
+    """
+    elems=['H','He','Li','Be','B','C','N','O','F','Ne','Na','Mg','Al','Si','P','S','Cl','Ar','K','Ca','Sc','Ti','V','Cr','Mn','Fe','Co','Ni','Cu','Zn','Ga','Ge','As','Se','Br','Kr','Rb','Sr','Y','Zr','Nb','Mo','Tc','Ru','Rh','Pd','Ag','Cd','In','Sn','Sb','Te','I','Xe','Cs','Ba','La','Ce','Pr','Nd','Pm','Sm','Eu','Gd','Tb','Dy','Ho','Er','Tm','Yb','Lu','Hf','Ta','W','Re','Os','Ir','Pt','Au','Hg','Tl','Pb','Bi','Po','At','Rn','Fr','Ra','Ac','Th','Pa','U','Np','Pu','Am','Cm','Bk','Cf','Es','Fm']
+    elem=elems[zaid//10000-1]
+    a=(zaid%10000)//10
+    M=zaid%10
+    if (M==0):
+        name=elem+str(a)
+    else:
+        name=elem+str(a)+'m'
+    return name
